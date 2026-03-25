@@ -1,19 +1,30 @@
 package com.example.myTaskmanager.model;
+import jakarta.persistence.*;
 
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import java.util.List;
 
 @Entity
 public class Task {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private String description;
     private String status;
+
+
+    @ManyToMany(mappedBy = "tasks")
+    private List<Day> days;
+
+
+    public List<Day> getDays() {
+        return days;
+    }
+
+    public void setDays(List<Day> days) {
+        this.days = days;
+    }
 
     public Long getId() {
         return id;
