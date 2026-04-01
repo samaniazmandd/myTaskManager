@@ -1,10 +1,9 @@
 package com.example.myTaskmanager.repository;
 
-
-import com.example.myTaskmanager.entity.Task;
+import com.example.myTaskmanager.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TaskRepository extends JpaRepository<Task, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 }

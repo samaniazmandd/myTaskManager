@@ -1,4 +1,4 @@
-package com.example.myTaskmanager.model;
+package com.example.myTaskmanager.entity;
 
 
 import jakarta.persistence.*;
@@ -7,15 +7,18 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-// name DAY wil give conflicts
 @Table(name = "DAY_TABLE")
 public class Day {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate date;
+
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     //owner of the relation because of @JoinTable
     @ManyToMany
@@ -25,8 +28,11 @@ public class Day {
             inverseJoinColumns = @JoinColumn(name = "task_id")
     )
 
+
     private List<Task> tasks;
-    public Day() {}
+
+    public Day() {
+    }
 
     public List<Task> getTasks() {
         return tasks;

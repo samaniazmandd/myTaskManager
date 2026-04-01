@@ -1,38 +1,23 @@
-package com.example.myTaskmanager.model;
-import jakarta.persistence.*;
+package com.example.myTaskmanager.dto.response;
 
-import java.util.List;
+public class TaskResponseDTO {
 
-@Entity
-public class Task {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private String description;
     private String status;
 
 
-    @ManyToMany(mappedBy = "tasks")
-    private List<Day> days;
-
-
-    public List<Day> getDays() {
-        return days;
+    public TaskResponseDTO() {
     }
 
-    public void setDays(List<Day> days) {
-        this.days = days;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
+    public TaskResponseDTO(Long id, String title, String description, String status) {
         this.id = id;
+        this.title = title;
+        this.description = description;
+        this.status = status;
     }
+
 
     public String getTitle() {
         return title;
@@ -50,6 +35,7 @@ public class Task {
         this.description = description;
     }
 
+
     public String getStatus() {
         return status;
     }
@@ -58,4 +44,11 @@ public class Task {
         this.status = status;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
