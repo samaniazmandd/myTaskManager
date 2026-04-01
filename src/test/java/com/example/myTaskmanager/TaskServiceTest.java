@@ -1,7 +1,7 @@
 package com.example.myTaskmanager;
 
 
-import com.example.myTaskmanager.model.Task;
+import com.example.myTaskmanager.entity.Task;
 import com.example.myTaskmanager.service.TaskService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

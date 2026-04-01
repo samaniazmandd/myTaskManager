@@ -1,20 +1,22 @@
 package com.example.myTaskmanager.service;
 
 
-import com.example.myTaskmanager.model.Task;
+import com.example.myTaskmanager.dto.request.TaskRequestDTO;
+import com.example.myTaskmanager.entity.Task;
 import com.example.myTaskmanager.repository.TaskRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 
-//Business logic
 @Service
 public class TaskService {
 
-    @Autowired
-    private TaskRepository taskRepository;
+    private final TaskRepository taskRepository;
+
+    public TaskService(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
+    }
 
     public Task createTask(Task task) {
         return taskRepository.save(task);
@@ -32,7 +34,7 @@ public class TaskService {
         taskRepository.deleteAll();
     }
 
-    public Task editTask(Long id, Task updatedTask) {
+    public Task editTask(Long id, TaskRequestDTO updatedTask) {
         Task existedTask = taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Task not found"));
 
         existedTask.setTitle(updatedTask.getTitle());

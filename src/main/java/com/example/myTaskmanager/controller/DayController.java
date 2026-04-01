@@ -1,26 +1,33 @@
 package com.example.myTaskmanager.controller;
 
-
-import com.example.myTaskmanager.model.Day;
+import com.example.myTaskmanager.dto.request.DayRequestDTO;
+import com.example.myTaskmanager.dto.response.DayResponseDTO;
+import com.example.myTaskmanager.entity.Day;
+import com.example.myTaskmanager.mapper.DayMapper;
 import com.example.myTaskmanager.service.DayService;
-import lombok.extern.java.Log;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/days")
 public class DayController {
 
-    @Autowired
-    private DayService dayService;
+    private final DayService dayService;
 
-    @DeleteMapping("/{dayId}/{taskId}")
-    public Day addTaskToDay(@PathVariable Long dayId, @PathVariable Long taskId) {
-        return dayService.addTasksToDay(dayId, taskId);
+    public DayController(DayService dayService) {
+        this.dayService = dayService;
+    }
+
+    @Operation(summary = "Add a task to a day")
+    @PostMapping("/{day-id}/tasks/{task-id}")
+    public DayResponseDTO addTaskToDay(@PathVariable("day-id") Long dayId, @PathVariable("task-id") Long taskId) {
+        return DayMapper.toDTO(dayService.addTasksToDay(dayId, taskId));
     }
 
 
+    @PostMapping
+    public DayResponseDTO createDay(@RequestBody DayRequestDTO dayRequestDTO) {
+        Day day = DayMapper.toEntity(dayRequestDTO);
+        return DayMapper.toDTO(dayService.createDay(day));
+    }
 }
